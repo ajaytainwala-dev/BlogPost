@@ -307,26 +307,25 @@
                         const FeaturedPosts = document.getElementById('FeaturedPosts');
 
                         blogPosts.forEach((post, index) => {
-                            const postCard = ` <div class="carousel-item">
+                            const postCard = ` <div class="carousel-item ${index === 0 ? 'active' : ''}">
                                     <div class="featured-card">
                                         <div class="row g-0">
-                                            <div class="col-md-6">
-                                                <img src="https://via.placeholder.com/600x400"
-                                                    class="img-fluid rounded-start" alt="Featured Post">
+                                            <div class="col-md-6 p-4">
+                                                <img src="/uploads/${post.image}"
+                                                    class="img-fluid rounded-start" alt="Featured Post" style="height: 100%; width: 100%; object-fit: cover;border-radius: 10px;">
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="card-body">
-                                                    <div class="card-category">Lifestyle</div>
-                                                    <h3 class="card-title">Mindfulness Practices for Busy Professionals
+                                                    <div class="card-category">${post.tags.join(', ')}</div>
+                                                    <h3 class="card-title">${post.title}</h3>
                                                     </h3>
-                                                    <p class="card-text">Simple yet effective techniques to incorporate
-                                                        mindfulness into your hectic schedule for better mental health.
+                                                    <p class="card-text">Click to read more...
                                                     </p>
                                                     <div class="card-meta">
-                                                        <span><i class="bi bi-clock"></i> 4 min read</span>
-                                                        <span><i class="bi bi-calendar3"></i> June 5, 2023</span>
+                                                        <span><i class="bi bi-clock"></i>  ${Math.ceil(post.content.split(' ').length / 200)} min read</span>
+                                                        <span><i class="bi bi-calendar3"></i> ${new Date(post.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
                                                     </div>
-                                                    <a href="blog-post.html" class="btn btn-primary">Read More</a>
+                                                   <a href="/page/view/post/${post.title}/${post._id}" class="btn btn-primary mt-2">Read More</a>
                                                 </div>
                                             </div>
                                         </div>
