@@ -1,0 +1,32 @@
+<div class="add-comment">
+    <h4>Leave a Comment</h4>
+    <form onsubmit="sendComment(event);return false;">
+
+        <div class="mb-3">
+            <textarea class="form-control" rows="5" placeholder="Your Comment" id="comment-content" required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            Post Comment
+        </button>
+    </form>
+</div>
+<script>
+    const sendComment = async (event) => {
+        const content = document.getElementById('comment-content').value;
+        const response = await fetch(`/api/comment/<%= postId %>`, { // Include postId in the fetch URL
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                "Authorization": `Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify({ content })
+        });
+        if (response.ok) {
+            document.getElementById('comment-content').value = '';
+            alert('Comment posted successfully');
+        } else {
+            alert('Failed to post comment');
+        }
+    }
+</script>

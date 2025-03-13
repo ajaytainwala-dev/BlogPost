@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="twitter:creator" content="@yourtwitterhandle" />
+    <!-- Bootstrap CSS CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background-color: #f5f8fa;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .profile-card {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .profile-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .profile-cover {
+            height: 180px;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            position: relative;
+        }
+
+        .profile-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid white;
+            position: absolute;
+            bottom: -75px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .profile-info {
+            margin-top: 85px;
+            text-align: center;
+            padding: 20px 30px 30px;
+        }
+
+        .profile-name {
+            margin-bottom: 5px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .profile-title {
+            color: #6c757d;
+            margin-bottom: 15px;
+        }
+
+        .profile-bio {
+            color: #495057;
+            margin-bottom: 25px;
+        }
+
+        .profile-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 25px;
+            padding: 15px 0;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-weight: 700;
+            font-size: 20px;
+            color: #333;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #6c757d;
+        }
+
+        .social-links {
+            margin-bottom: 25px;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            color: white;
+            background-color: #6c757d;
+            margin: 0 5px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .social-links a:hover {
+            transform: scale(1.1);
+        }
+
+        .social-twitter {
+            background-color: #1da1f2;
+        }
+
+        .social-linkedin {
+            background-color: #0077b5;
+        }
+
+        .social-github {
+            background-color: #333;
+        }
+
+        .social-instagram {
+            background-color: #e1306c;
+        }
+
+        .profile-actions .btn {
+            padding: 8px 25px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-message {
+            color: white;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            border: none;
+        }
+
+        .btn-message:hover {
+            background: linear-gradient(135deg, #5910a8 0%, #1e60d3 100%);
+            transform: translateY(-2px);
+        }
+
+        .btn-connect {
+            border: 2px solid #6a11cb;
+            color: #6a11cb;
+        }
+
+        .btn-connect:hover {
+            background-color: #6a11cb;
+            color: white;
+        }
+
+        .skills-container {
+            margin-top: 25px;
+        }
+
+        .skill-tag {
+            display: inline-block;
+            padding: 5px 15px;
+            margin: 5px;
+            border-radius: 50px;
+            background-color: #e9ecef;
+            color: #495057;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .skill-tag:hover {
+            background-color: #6a11cb;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .tab-content {
+            padding: 20px 0;
+        }
+
+        .tab-pane {
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .activity-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            margin-right: 15px;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-time {
+            font-size: 12px;
+            color: #6c757d;
+        }
+
+        .edit-profile {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .edit-profile:hover {
+            background-color: white;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+
+<body>
+    <%-include("../navbar")-%>
+        <script>
+            // const token = localStorage.getItem("token");
+            if (!localStorage.getItem("admin-token")) {
+                window.location.href = "/page/admin/auth/login";
+            }
+            let data = {};
+            const fetchProfileData = async () => {
+                try {
+                    const response = await fetch(`/api/admin/fetch/profile/<%- userID %>`, {
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${localStorage.getItem("admin-token")}`,
+                        },
+                    });
+                    if (response.ok) {
+                        data = await response.json();
+                        if (!localStorage.getItem("user")) {
+                            localStorage.setItem("user", data._id);
+                        }
+                        document.querySelector(".profile-name").textContent = data.name;
+                        document.querySelector("#profile-email").textContent = data.email;
+                        document.getElementById("profile-about").textContent = data.about;
+                        document.getElementById("profile-title").textContent = data.jobTitle; // Update profile title
+                        document.getElementById("profile-image").src = `/profile/${data.profileImage}`; // Update profile image
+                    } else {
+                        throw new Error("Failed to fetch profile data");
+                    }
+                } catch (error) {
+                    console.error(error);
+                    alert("Failed to fetch profile data");
+                }
+            }
+            fetchProfileData();
+        </script>
+        <div class="container py-5" style="margin:5.5rem auto;">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="profile-card mb-4">
+                        <div class="profile-cover">
+
+                            <img src="" alt="Profile Image" id="profile-image" class="profile-avatar" />
+                        </div>
+                        <div class="profile-info">
+                            <h3 class="profile-name"></h3>
+                            <h5 id="profile-title"></h5>
+                            <!-- email -->
+                            <p><i class="bi bi-envelope"></i> <span class="profile-email" id="profile-email"></span></p>
+                            </p>
+                            <p>
+                                <i class="bi bi-chat"></i>
+                                <span class="profile-email" id="profile-about"></span>
+                            </p>
+
+                        </div>
+
+
+
+                        <div class="tab-content px-4" id="profileTabsContent">
+                            <div class="tab-pane fade show active" id="activity" role="tabpanel"
+                                aria-labelledby="activity-tab">
+                                <div id="activity "></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        </div>
+        </div>
+
+        <!-- Bootstrap & jQuery -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+        <%-include("../footer")-%>
+</body>
+
+</html>

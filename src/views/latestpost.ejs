@@ -1,0 +1,47 @@
+<section class="latest-posts">
+    <div class="container">
+        <div class="section-header">
+            <h2>Latest Articles</h2>
+            <p>Fresh content from our writers</p>
+        </div>
+        <div class="row d-flex justify-content-center align-items-center" id="latestPosts">
+
+        </div>
+        <script>
+
+            const latestPosts = document.getElementById("latestPosts");
+            const fetchLatestPost = async () => {
+
+                const response = await fetch('/api/latest/posts');
+                const latestPostsData = await response.json();
+
+                latestPostsData.posts.slice(0, 4).forEach(post => {
+                    const postCard = `
+                                <div class="col-lg-4 col-md-6 mb-4">
+                                    <div class="post-card h-100">
+                                        <div class="post-card-img" style="height:250px;">
+                                            <div class="post-category">${post.tags[0]}</div>
+                                            <img src="/uploads/${post.image}" alt="Post Image" class="w-100 img-fluid" >
+                                        </div>
+                                        <div class="post-card-body d-flex flex-column">
+                                            <h3 class="post-card-title">${post.title}</h3>
+                                            <p class="post-card-text">Click to read more...</p>
+                                            <div class="post-card-meta mt-auto">
+                                                <span><i class="bi bi-clock"></i> ${Math.ceil(post.content.split(' ').length / 200)} min read</span>
+                                                <span><i class="bi bi-calendar3"></i> ${new Date(post.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                                                <span><i class="bi bi-pen-fill"></i> ${post.authorId.name}</span>
+                                            </div>
+                                            <a href="/page/view/post/${post.title}/${post._id}" class="btn btn-primary mt-2">Read More</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            `
+                    latestPosts.innerHTML += postCard;
+                });
+
+            }
+            fetchLatestPost();
+        </script>
+      
+    </div>
+</section>

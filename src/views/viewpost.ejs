@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Future of AI in Everyday Life - Insight Blog</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+    <%- include("navbar") %>
+        <!-- Blog Post Content -->
+        <section class="blog-post-section">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-10">
+                        <article class="blog-post">
+                            <div class="post-header">
+
+                                <h1 class="post-title" id="postTitle"></h1>
+                                <div class="post-tags">
+                                    <ul id="tags" class="tags-list d-flex gap-4 flex-wrap">
+                                        <!-- Tags will be added here dynamically -->
+
+                                    </ul>
+
+
+                                </div>
+                                <div class="post-meta">
+                                    <div class="author">
+                                        <img src="" alt="Author" class="author-img" id="authorProfileImage">
+                                        <div class="author-info">
+                                            <h5 id="authorName"></h5>
+                                            <!-- <p>Tech Editor</p> -->
+                                        </div>
+                                    </div>
+                                    <div class="post-details">
+                                        <span><i class="bi bi-calendar3"></i> <span id="postDate"></span> </span>
+                                        <span><i class="bi bi-clock"></i> <span id="readTime"></span></span>
+                                        <span><i class="bi bi-chat-dots"></i> <span id="commentCount"></span>
+                                            Comments</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Cover Image -->
+                            <div class="post-featured-img m-auto d-flex justify-content-center mb-8">
+                                <img src="" alt="Cover Image" class="img-fluid m-auto" id="coverImage"
+                                    style="height: 2.5%;">
+                            </div>
+
+                            <div class="post-content">
+                                <div id="postContent"></div>
+
+
+
+
+
+
+
+
+                                <div class="share-post">
+                                    <span>Share this post:</span>
+                                    <a href="https://www.facebook.com/sharer/sharer.php?u=URL" target="_blank"><i
+                                            class="bi bi-facebook"></i></a>
+                                    <a href="https://twitter.com/intent/tweet?url=URL&text=TEXT" target="_blank"><i
+                                            class="bi bi-twitter"></i></a>
+                                    <a href="https://www.linkedin.com/shareArticle?mini=true&url=URL&title=TITLE&summary=SUMMARY&source=SOURCE"
+                                        target="_blank"><i class="bi bi-linkedin"></i></a>
+                                    <a href="mailto:?subject=SUBJECT&body=URL" target="_blank"><i
+                                            class="bi bi-envelope"></i></a>
+                                    <button class="btn btn-outline-secondary" onclick="copyLink()"><i
+                                            class="bi bi-clipboard"></i> Copy Link</button>
+
+                                    <script>
+                                        function copyLink() {
+                                            const url = window.location.href;
+                                            navigator.clipboard.writeText(url).then(() => {
+                                                alert('Link copied to clipboard');
+                                            }).catch(err => {
+                                                console.error('Failed to copy: ', err);
+                                            });
+                                        }
+                                    </script>
+                                </div>
+                            </div>
+
+                            <div class="author-bio">
+                                <div class="row">
+                                    <div class="col-md-2 d-flex justify-content-center ">
+                                        <img src="" alt="Author" style="border-radius: 50%;"
+                                            class="img-fluid rounded-circle" id="authorImage">
+                                    </div>
+                                    <div class="col-md-10">
+                                        <h4 id="aboutAuthorName"></h4>
+                                        <p class="author-role" id="authorRole">Tech Editor</p>
+                                        <p id="authorBio">Alex has been covering technology trends for over a decade,
+                                            with a particular
+                                            focus on artificial intelligence and its impact on society. When not
+                                            writing, he enjoys hiking and experimenting with smart home technology.</p>
+                                        <!-- <div class="author-social">
+                                            <a href="#"><i class="bi bi-twitter"></i></a>
+                                            <a href="#"><i class="bi bi-linkedin"></i></a>
+                                            <a href="#"><i class="bi bi-globe"></i></a>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <section class="latest-posts">
+                                <div class="container">
+                                    <div class="section-header">
+                                        <h2>Latest Articles</h2>
+                                        <p>Fresh content from our writers</p>
+                                    </div>
+                                    <div class="row d-flex justify-content-center align-items-center" id="latestPosts">
+
+                                    </div>
+                                    <script>
+
+                                        const latestPosts = document.getElementById("latestPosts");
+                                        const fetchLatestPost = async () => {
+
+                                            const response = await fetch('/api/latest/posts');
+                                            const latestPostsData = await response.json();
+
+                                            latestPostsData.posts.slice(0, 4).forEach(post => {
+                                                const postCard = `
+                                <div class="col-lg-4 col-md-6 mb-4">
+                                    <div class="post-card h-100">
+                                        <div class="post-card-img" style="height:150px;">
+                                            <div class="post-category">${post.tags[0]}</div>
+                                            <img src="/uploads/${post.image}" alt="Post Image" class="w-100 img-fluid" style="height:150px;">
+                                        </div>
+                                        <div class="post-card-body d-flex flex-column">
+                                            <h3 class="post-card-title">${post.title}</h3>
+                                            <p class="post-card-text">Click to read more...</p>
+                                            <div class="post-card-meta mt-auto">
+                                                <span><i class="bi bi-clock"></i> ${Math.ceil(post.content.split(' ').length / 200)} min read</span>
+                                                <span><i class="bi bi-calendar3"></i> ${new Date(post.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                                                <span><i class="bi bi-pen-fill"></i> ${post.authorId.name}</span>
+                                            </div>
+                                            <a href="/page/view/post/${post.title}/${post._id}" class="btn btn-primary mt-2">Read More</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            `
+                                                latestPosts.innerHTML += postCard;
+                                            });
+
+                                        }
+                                        fetchLatestPost();
+                                    </script>
+
+                                </div>
+                            </section>
+                            <div class="comments-section">
+                                <h3 id="commentTag"></h3>
+
+
+                                <div id="commentSection">
+
+                                </div>
+
+
+
+
+
+                                <div class="add-comment">
+                                    <h4>Leave a Comment</h4>
+                                    <form onsubmit="sendComment();return false;">
+                                        <input type="text" id="postId" value="" hidden>
+                                        <div class="mb-3">
+                                            <textarea class="form-control" rows="5" placeholder="Your Comment"
+                                                id="comment-content" required></textarea>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-primary">
+                                            Post Comment
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter Section -->
+        <% include("newsletter") %>
+            <!-- Footer -->
+            <%- include("footer") %>
+
+
+
+
+
+
+                <!-- Scripts -->
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+                <script>
+                    const postTitle = document.getElementById('postTitle');
+                    const authorName = document.getElementById('authorName');
+                    const aboutAuthorName = document.getElementById('aboutAuthorName');
+                    const authorRole = document.getElementById('authorRole');
+                    const authorBio = document.getElementById('authorBio');
+                    const authorImage = document.getElementById('authorImage');
+                    const authorProfileImage = document.getElementById('authorProfileImage');
+                    const coverImage = document.getElementById('coverImage');
+                    const postContent = document.getElementById('postContent');
+                    const postDate = document.getElementById('postDate');
+                    const readTime = document.getElementById('readTime');
+                    const commentTag = document.getElementById('commentTag');
+                    const commentCount = document.getElementById('commentCount');
+                    const postId = document.getElementById('postId'); // Get the postId value
+                    const tags = document.getElementById('tags');
+
+                    const fetchBlog = async () => {
+                        const response = await fetch(`/api/post/<%- title %>/<%- id %>`); // Fetch the blog post data
+                        const data = await response.json();
+                        postTitle.innerText = data.post.title;
+                        authorName.innerText = data.post.authorId.name;
+                        aboutAuthorName.innerText = data.post.authorId.name; // Display the author's about section
+                        authorRole.innerText = data.post.authorId.jobTitle; // Display the author's role
+                        authorBio.innerText = data.post.authorId.about; // Display the author's bio
+                        coverImage.src = `/uploads/${data.post.image}`; // Set the cover image source
+                        authorImage.src = `/profile/${data.post.authorId.profileImage}`; // Set the author image source
+                        authorProfileImage.src = `/profile/${data.post.authorId.profileImage}`; // Set the author's profile  image source
+                        postContent.innerHTML = data.post.content; // Display the blog post content
+                        tags.innerHTML = ''; // Clear existing tags
+                        data.post.tags.forEach(tag => {
+                            const a = document.createElement('a');
+                            a.innerText = tag;
+                            a.style.cursor = 'pointer';
+                            a.classList.add('badge', 'bg-secondary');
+                            a.classList.add('text-white');
+                            a.href = '#';
+                            tags.appendChild(a);
+                        });
+                        postDate.innerText = new Date(data.post.createdAt).toDateString(); // Display the post date
+                        readTime.innerText = `${Math.ceil(data.post.content.split(' ').length / 200)} min read`; // Display the read time
+                        commentCount.innerText = data.post.comments.length; // Display the comment count
+                        commentTag.innerText = `${data.post.comments.length} Comments`; // Display comment tag
+                        postId.value = data.post._id; // Set the postId value
+                        console.log(data);
+                        await fetchComments(data.post._id, data.post.authorId._id); // Fetch the comments for the post
+                    }
+                    fetchBlog();
+
+                    const sendComment = async () => {
+                        const content = document.getElementById('comment-content').value;
+                        const postId = document.getElementById('postId').value;
+                        const response = await fetch(`/api/comment/${postId}`, { // Include postId in the fetch URL
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                "Authorization": `Bearer ${localStorage.getItem('token')}`
+                            },
+                            body: JSON.stringify({ content })
+                        });
+                        if (response.ok) {
+                            document.getElementById('comment-content').value = '';
+                            window.location.reload();
+                        } else {
+                            alert('Failed to post comment');
+                        }
+                    }
+
+                    const fetchComments = async (postId, userId) => {
+                        const commentSection = document.getElementById('commentSection');
+                        const response = await fetch(`/api/comments/${userId}/${postId}`); // Fetch the comments for the post
+                        const data = await response.json();
+                        console.log(data);
+                        const user_Id = localStorage.getItem('user');
+                        commentSection.innerHTML = ''; // Clear existing comments
+                        data.forEach(comment => {
+                            const commentDiv = document.createElement('div');
+                            commentDiv.classList.add('comment');
+                            commentDiv.innerHTML = `
+                                <div class="comment-avatar">
+                                    <img src="/profile/${comment.authorId.profileImage}" alt="Commenter" class="rounded-circle" id="commenterImage">
+                                </div>
+                                <div class="comment-content" style="width:100%;">
+                                    <div class="comment-info d-flex justify-content-between align-items-center" style="width:100%;">
+                                        <div>
+                                            <h5 id="commenterName">${comment.authorId.name}</h5>
+                                            <span id="commentDate">${new Date(comment.createdAt).toLocaleString()}</span>
+                                            ${comment.authorId._id === userId ? '<span class="badge bg-primary" style="color:white;">Author</span>' : ''}
+                                        </div>
+                                        ${comment.authorId._id === user_Id ? `<button class="btn btn-danger btn-sm ms-auto" onclick="deleteComment('${comment._id}')"><i class="bi bi-trash"></i></button>` : ''}
+                                    </div>
+                                    <p id="commentContent">${comment.content}</p>
+                                </div>
+                            `;
+                            commentSection.appendChild(commentDiv);
+                        });
+                    }
+
+                    const deleteComment = async (commentId) => {
+                        const response = await fetch(`/api/comment/${commentId}`, {
+                            method: 'DELETE',
+                            headers: {
+                                "Authorization": `Bearer ${localStorage.getItem('token')}`
+                            }
+                        });
+                        if (response.ok) {
+                            alert('Comment deleted successfully');
+                            window.location.reload(); // Reload to fetch updated comments
+                        } else {
+                            alert('Failed to delete comment');
+                        }
+                    }
+                </script>
+</body>
+
+</html>

@@ -1,0 +1,62 @@
+<section class="newsletter-section">
+    <div class="container">
+        <div class="newsletter-container">
+            <div id="NewsAlert"></div>
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h2>Subscribe to Our Newsletter</h2>
+                    <p>Get the latest articles, resources, and insights delivered directly to your inbox.</p>
+                </div>
+                <div class="col-lg-6">
+                    <form class="newsletter-form" onsubmit="submitNewsLetter(event)">
+                        <div class="input-group">
+                            <input type="email" class="form-control" placeholder="Your email address" required>
+                            <button class="btn btn-primary" type="submit">Subscribe</button>
+                        </div>
+                        <div class="form-check mt-2">
+                            <input class="form-check-input" type="checkbox" id="privacyCheck" required>
+                            <label class="form-check-label" for="privacyCheck">
+                                I agree to the <a href="#">privacy policy</a>
+                            </label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    const submitNewsLetter = async(event)=>{
+        event.preventDefault();
+        const email = document.querySelector('.newsletter-form input').value;
+        const privacyCheck = document.querySelector('.newsletter-form #privacyCheck').checked;
+        if(!privacyCheck){
+            alert('Please agree to the privacy policy');
+            return;
+        }
+        const response = await fetch('/api/newsletter/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({email})
+        });
+        if(response.status === 200){
+            document.getElementById("NewsAlert").innerHTML = `
+                <% - include('Alert/alert', {
+                    alertType: 'success',
+                    alertMessage: 'Subscription Successful',
+                    isDismissible: true
+                }) %> `;
+                document.querySelector('.newsletter-form input').value = '';
+        }else{
+            const errorResponse = await response.json();
+            document.getElementById("NewsAlert").innerHTML = `
+                <% - include('Alert/alert', {
+                    alertType: 'error',
+                    alertMessage: 'Failed to subscribe to newsletter',
+                    isDismissible: true
+                }) %> `;
+        }
+    }
+</script>

@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <!-- Custom CSS -->
+    <style>
+        #sidebar .nav-link {
+            color: #fff;
+        }
+
+        #sidebar .nav-link.active {
+            font-weight: bold;
+        }
+
+        #sidebar .nav-link i {
+            margin-right: 0.5rem;
+        }
+
+        #sidebar .nav-link:hover {
+            color: #f8f9fa;
+        }
+
+        #sidebar .nav-link.active::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0.25rem;
+            height: 100%;
+            background-color: #007bff;
+        }
+
+        #sidebar .nav-link.active i {
+            color: #007bff;
+        }
+
+        #sidebar .nav-link.active:hover {
+            color: #007bff;
+        }
+
+        #sidebar .nav-link.active:hover::before {
+            background-color: #007bff;
+        }
+
+        #sidebar .nav-link.active i {
+            color: #007bff;
+        }
+
+        #sidebar .nav-link.active:hover {
+            color: #007bff;
+        }
+
+        #sidebar .nav-link.active::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0.25rem;
+            height: 100%;
+            background-color: #007bff;
+        }
+
+        #sidebar .nav-link.active i {
+            color: #007bff;
+        }
+
+        #sidebar .nav-link.active:hover {
+            color: #007bff;
+        }
+
+        #sidebar .nav-link.active:hover::before {
+            background-color: #007bff;
+        }
+
+        #sidebar .nav-link.active i {
+            color: #007bff;
+        }
+
+        #sidebar .nav-link.active:hover {
+            color: #007bff;
+        }
+
+        #sidebar .nav-link.active::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0.25rem;
+        }
+    </style>
+</head>
+
+<body>
+    <%- include('../navbar') %>
+        <div class="container-fluid" style="margin-top: 5.5rem;">
+            <div class="row ">
+
+                <!-- Main Content -->
+                <main class="col-md-12 ms-sm-auto col-lg-12 px-md-4">
+                    <div
+                        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                        <h1 class="h2">Dashboard</h1>
+                        <button class="btn btn-sm btn-primary"><a href="/page/post"
+                                style="color: white;font-weight: bold;">New Post + </a></button>
+                    </div>
+
+
+                    <!-- Recent Posts Table -->
+                    <div class="card mb-4">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="card-title mb-0">Your recent posts</h5>
+                            <!-- <button class="btn btn-sm btn-primary">View All</button> -->
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Title</th>
+                                            <th>Author</th>
+                                            <th>Date</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        <!-- Add more rows as needed -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- All Users Table -->
+                    <div class="card mb-4">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="card-title mb-0">ALL Users</h5>
+                            <!-- <button class="btn btn-sm btn-primary">View All</button> -->
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Job Title</th>
+                                            <th>No of Blogs</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="users-table">
+
+                                        <!-- Add more rows as needed -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+
+        <!-- Bootstrap JS Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Custom JS -->
+        <script>
+            const response = async () => {
+                try {
+                    const res = await fetch(`/api/admin/all/posts`, {
+                        method: 'GET',
+                        headers: {
+                            "Authorization": `Bearer ${localStorage.getItem('admin-token')}`,
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    const data = await res.json();
+                    console.log(data); // Process the data as needed
+                    // Example: Update the HTML with fetched data
+                    if (data.error || data.length === 0) {
+                        const row = document.createElement('tr');
+                        const noPostCell = document.createElement('td');
+                        noPostCell.textContent = 'No posts found';
+                        noPostCell.colSpan = 5;
+                        noPostCell.style.textAlign = 'center';
+                        row.appendChild(noPostCell);
+                        document.querySelector('tbody').appendChild(row);
+                    } else {
+
+
+                        data.forEach(post => {
+                            const row = document.createElement('tr');
+
+                            const titleCell = document.createElement('td');
+                            titleCell.textContent = post.title;
+                            row.appendChild(titleCell);
+
+                            const authorCell = document.createElement('td');
+                            authorCell.textContent = post.authorId.name;
+                            row.appendChild(authorCell);
+
+                            const dateCell = document.createElement('td');
+                            dateCell.textContent = new Date(post.createdAt).toLocaleString();
+                            row.appendChild(dateCell);
+
+                            const statusCell = document.createElement('td');
+                            const statusBadge = document.createElement('span');
+                            statusBadge.className = `badge bg-success`;
+                            statusBadge.textContent = 'Published';
+                            statusCell.appendChild(statusBadge);
+                            row.appendChild(statusCell);
+
+                            const actionsCell = document.createElement('td');
+                            const btnGroup = document.createElement('div');
+                            btnGroup.className = 'btn-group btn-group-sm';
+
+                            const viewBtn = document.createElement('a');
+                            viewBtn.className = 'btn btn-success';
+                            viewBtn.innerHTML = '<i class="bi bi-eye"></i>';
+                            viewBtn.href = `/page/view/post/${post.title}/${post._id}`;
+                            btnGroup.appendChild(viewBtn);
+
+                         
+                            const deleteBtn = document.createElement('button');
+                            deleteBtn.className = 'btn btn-danger';
+                            deleteBtn.innerHTML = '<i class="bi bi-trash"></i>';
+                            deleteBtn.setAttribute('data-bs-toggle', 'modal');
+                            deleteBtn.setAttribute('data-bs-target', `#deleteModal-${post._id}`);
+                            btnGroup.appendChild(deleteBtn);
+
+                            // Modal for delete confirmation
+                            const modal = document.createElement('div');
+                            modal.className = 'modal fade';
+                            modal.id = `deleteModal-${post._id}`;
+                            modal.tabIndex = -1;
+                            modal.setAttribute('aria-labelledby', `deleteModalLabel-${post._id}`);
+                            modal.setAttribute('aria-hidden', 'true');
+                            modal.innerHTML = `
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteModalLabel-${post._id}">Delete Confirmation</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Are you sure you want to delete this post?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <button type="button" class="btn btn-danger" onclick="deletePost('${post._id}', '#deleteModal-${post._id}');javascript:window.location.reload();">Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                            document.body.appendChild(modal);
+                            actionsCell.appendChild(btnGroup);
+                            row.appendChild(actionsCell);
+
+                            document.querySelector('tbody').appendChild(row);
+                        });
+                    }
+                    // Call response function to fetch and display data when the page loads
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            }
+            response();
+        </script>
+        <script>
+            if(!localStorage.getItem('admin-token')) {
+                window.location.href = '/page/admin/login';
+            }
+            const deletePost = async (postId, modalId) => {
+                try {
+                    const res = await fetch(`/api/post/${postId}/delete`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            "Authorization": `Bearer ${localStorage.getItem('admin-token')}`
+                        }
+                    });
+                    const data = await res.json();
+
+                    if (data.success) {
+                        // Optionally, remove the post from the table without a reload
+                        document.querySelector(`#post-row-${postId}`).remove();
+                        const modalElement = document.querySelector(modalId);
+                        const modalInstance = bootstrap.Modal.getInstance(modalElement);
+                        modalInstance.hide();
+                    }
+                    // Reload the page to reflect the changes
+                    location.reload();
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            }
+        </script>
+        <!-- Fetching User -->
+        <script>
+            const UserResponse = async () => {
+                const userTable = document.getElementById('users-table');
+                try {
+                    const res = await fetch(`/api/admin/all/users`, {
+                        method: 'GET',
+                        headers: {
+                            "Authorization": `Bearer ${localStorage.getItem('admin-token')}`,
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    const data = await res.json();
+                    console.log(data); // Process the data as needed
+                    // Example: Update the HTML with fetched data
+                    if (data.error || data.length === 0) {
+                        const row = document.createElement('tr');
+                        const noPostCell = document.createElement('td');
+                        noPostCell.textContent = 'No users found';
+                        noPostCell.colSpan = 5;
+                        noPostCell.style.textAlign = 'center';
+                        row.appendChild(noPostCell);
+                        userTable.appendChild(row);
+                    } else {
+
+
+                        data.users.forEach(user => {
+                            const row = document.createElement('tr');
+                            row.id = `user-row-${user._id}`; // Added id to the row for user context
+
+                            const nameCell = document.createElement('td');
+                            nameCell.textContent = user.name; // updated variable name
+                            row.appendChild(nameCell); // append changed from titleCell to nameCell
+
+                            const emailCell = document.createElement('td');
+                            emailCell.textContent = user.email; // updated variable name
+                            row.appendChild(emailCell); // append emailCell
+
+                            const jobTitleCell = document.createElement('td');
+                            jobTitleCell.textContent = user.jobTitle;
+                            jobTitleCell.style.whiteSpace = 'nowrap';
+                            jobTitleCell.style.overflow = 'hidden';
+                            jobTitleCell.style.textOverflow = 'ellipsis';
+                            row.appendChild(jobTitleCell); // fixed variable name and appended correctly
+
+                        
+                            const noOfBlogsCell = document.createElement('td');
+                            noOfBlogsCell.textContent = user.postCount;
+                            row.appendChild(noOfBlogsCell);
+                        
+
+                            const actionsCell = document.createElement('td');
+                            const btnGroup = document.createElement('div');
+                            btnGroup.className = 'btn-group btn-group-sm';
+
+                            const viewBtn = document.createElement('a');
+                            viewBtn.className = 'btn btn-success';
+                            viewBtn.innerHTML = '<i class="bi bi-info-circle"></i>';
+                            viewBtn.href = `/page/admin/view/profile/${user._id}`;
+                            btnGroup.appendChild(viewBtn);
+
+                            
+
+                            const deleteBtn = document.createElement('button');
+                            deleteBtn.className = 'btn btn-danger';
+                            deleteBtn.innerHTML = '<i class="bi bi-trash"></i>';
+                            deleteBtn.setAttribute('data-bs-toggle', 'modal');
+                            deleteBtn.setAttribute('data-bs-target', `#deleteModal-${user._id}`);
+                            btnGroup.appendChild(deleteBtn);
+
+                            // Modal for delete confirmation
+                            const modal = document.createElement('div');
+                            modal.className = 'modal fade';
+                            modal.id = `deleteModal-${user._id}`;
+                            modal.tabIndex = -1;
+                            modal.setAttribute('aria-labelledby', `deleteModalLabel-${user._id}`);
+                            modal.setAttribute('aria-hidden', 'true');
+                            modal.innerHTML = `
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteModalLabel-${user._id}">Delete Confirmation</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Are you sure you want to delete this post?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <button type="button" class="btn btn-danger" onclick="deleteUser('${user._id}', '#deleteModal-${user._id}');javascript:window.location.reload();">Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                            document.body.appendChild(modal);
+                            actionsCell.appendChild(btnGroup);
+                            row.appendChild(actionsCell);
+
+                            userTable.appendChild(row);
+                        });
+                    }
+                    // Call response function to fetch and display data when the page loads
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            }
+            UserResponse();
+        </script>
+        <script>
+            if(!localStorage.getItem('admin-token')) {
+                window.location.href = '/page/admin/login';
+            }
+            const deleteUser = async (userId, modalId) => {
+                try {
+                    const res = await fetch(`/api/admin/delete/user/${userId}`, { // Change :id to ${postId}
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            "Authorization": `Bearer ${localStorage.getItem('admin-token')}`
+                        }
+                    });
+                    const data = await res.json();
+
+                    if (data.success) {
+                        // Optionally, remove the user from the table without a reload
+                        document.querySelector(`#user-row-${userId}`).remove(); // Adjusted for user context
+                        const modalElement = document.querySelector(modalId);
+                        const modalInstance = bootstrap.Modal.getInstance(modalElement);
+                        modalInstance.hide();
+                    }
+                    // Reload the page to reflect the changes
+                    location.reload();
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            }
+        </script>
+        <%- include('../footer') %>
+</body>
+
+</html>

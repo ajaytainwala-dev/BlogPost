@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insight Blog - Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <%- include("navbar") %>
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6">
+                        <h1 class="hero-title">Discover Insights That Matter</h1>
+                        <p class="hero-subtitle">Explore thought-provoking articles on technology, lifestyle, travel,
+                            and more.</p>
+                        <div class="hero-buttons">
+                            <a id="explore-articles-btn" class="btn btn-primary">Explore Articles</a>
+                            <a href="#featured" class="btn btn-outline-secondary ms-2">Featured Posts</a>
+                        </div>
+                    </div>
+                    <script>
+                        // existing JavaScript code
+
+                        document.addEventListener('DOMContentLoaded', function () {
+                            const exploreArticlesBtn = document.getElementById('explore-articles-btn');
+                            if (exploreArticlesBtn) {
+                                const token = localStorage.getItem('token');
+                                exploreArticlesBtn.href = token ? '/page/blog' : '/auth/page/login';
+                            }
+                        });
+                    </script>
+                    <div class="col-lg-6">
+                        <img src="/BlogHero.webp" alt="Blog Hero Image" class="img-fluid hero-image">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Posts -->
+        <section id="featured" class="featured-posts">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Featured Posts</h2>
+                    <p>Our most popular and trending articles</p>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div id="featuredCarousel" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-indicators">
+                                <button type="button" data-bs-target="#featuredCarousel" data-bs-slide-to="0"
+                                    class="active" aria-current="true" aria-label="Slide 1"></button>
+                                <button type="button" data-bs-target="#featuredCarousel" data-bs-slide-to="1"
+                                    aria-label="Slide 2"></button>
+                                <button type="button" data-bs-target="#featuredCarousel" data-bs-slide-to="2"
+                                    aria-label="Slide 3"></button>
+                            </div>
+                            <div class="carousel-inner" id="FeaturedPosts">
+                                <!-- <div class="carousel-item active">
+                                    <div class="featured-card">
+                                        <div class="row g-0">
+                                            <div class="col-md-6">
+                                                <img src="https://via.placeholder.com/600x400"
+                                                    class="img-fluid rounded-start" alt="Featured Post">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="card-body">
+                                                    <div class="card-category">Technology</div>
+                                                    <h3 class="card-title">The Future of AI in Everyday Life</h3>
+                                                    <p class="card-text">Explore how artificial intelligence is
+                                                        transforming our daily routines and what to expect in the coming
+                                                        years.</p>
+                                                    <div class="card-meta">
+                                                        <span><i class="bi bi-clock"></i> 5 min read</span>
+                                                        <span><i class="bi bi-calendar3"></i> June 12, 2023</span>
+                                                    </div>
+                                                    <a href="blog-post.html" class="btn btn-primary">Read More</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="carousel-item">
+                                    <div class="featured-card">
+                                        <div class="row g-0">
+                                            <div class="col-md-6">
+                                                <img src="https://via.placeholder.com/600x400"
+                                                    class="img-fluid rounded-start" alt="Featured Post">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="card-body">
+                                                    <div class="card-category">Travel</div>
+                                                    <h3 class="card-title">Hidden Gems: Unexplored Destinations</h3>
+                                                    <p class="card-text">Discover breathtaking locations off the beaten
+                                                        path that offer authentic experiences away from tourist crowds.
+                                                    </p>
+                                                    <div class="card-meta">
+                                                        <span><i class="bi bi-clock"></i> 7 min read</span>
+                                                        <span><i class="bi bi-calendar3"></i> May 28, 2023</span>
+                                                    </div>
+                                                    <a href="blog-post.html" class="btn btn-primary">Read More</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="carousel-item">
+                                    <div class="featured-card">
+                                        <div class="row g-0">
+                                            <div class="col-md-6">
+                                                <img src="https://via.placeholder.com/600x400"
+                                                    class="img-fluid rounded-start" alt="Featured Post">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="card-body">
+                                                    <div class="card-category">Lifestyle</div>
+                                                    <h3 class="card-title">Mindfulness Practices for Busy Professionals
+                                                    </h3>
+                                                    <p class="card-text">Simple yet effective techniques to incorporate
+                                                        mindfulness into your hectic schedule for better mental health.
+                                                    </p>
+                                                    <div class="card-meta">
+                                                        <span><i class="bi bi-clock"></i> 4 min read</span>
+                                                        <span><i class="bi bi-calendar3"></i> June 5, 2023</span>
+                                                    </div>
+                                                    <a href="blog-post.html" class="btn btn-primary">Read More</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> -->
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#featuredCarousel"
+                                data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#featuredCarousel"
+                                data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Latest Posts -->
+        <section class="latest-posts">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Latest Articles</h2>
+                    <p>Fresh content from our writers</p>
+                </div>
+                <div class="row d-flex justify-content-center align-items-center" id="latestPosts">
+
+                </div>
+                <script>
+
+                    const latestPosts = document.getElementById("latestPosts");
+                    const fetchLatestPost = async () => {
+
+                        const response = await fetch('/api/latest/posts');
+                        const latestPostsData = await response.json();
+
+                        latestPostsData.posts.slice(0, 4).forEach(post => {
+                            const postCard = `
+                                <div class="col-lg-4 col-md-6 mb-4">
+                                    <div class="post-card h-100">
+                                        <div class="post-card-img" style="height:250px;">
+                                            <div class="post-category">${post.tags[0]}</div>
+                                            <img src="/uploads/${post.image}" alt="Post Image" class="w-100 img-fluid" >
+                                        </div>
+                                        <div class="post-card-body d-flex flex-column">
+                                            <h3 class="post-card-title">${post.title}</h3>
+                                            <p class="post-card-text">Click to read more...</p>
+                                            <div class="post-card-meta mt-auto">
+                                                <span><i class="bi bi-clock"></i> ${Math.ceil(post.content.split(' ').length / 200)} min read</span>
+                                                <span><i class="bi bi-calendar3"></i> ${new Date(post.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                                                <span><i class="bi bi-pen-fill"></i> ${post.authorId.name}</span>
+                                            </div>
+                                            <a href="/page/view/post/${post.title}/${post._id}" class="btn btn-primary mt-2">Read More</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            `
+                            latestPosts.innerHTML += postCard;
+                        });
+
+                    }
+                    fetchLatestPost();
+                </script>
+                <div class="text-center mt-4">
+                    <a href="/page/allblogs" class="btn btn-primary">View All Articles</a>
+                </div>
+            </div>
+        </section>
+        <!-- Categories Section -->
+        <!-- <section class="categories-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Explore Categories</h2>
+                    <p>Find content that matches your interests</p>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                        <div class="category-card" style="background-image: url('https://via.placeholder.com/300x200')">
+                            <div class="category-overlay">
+                                <h3>Technology</h3>
+                                <p>42 Articles</p>
+                                <a href="#" class="stretched-link"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                        <div class="category-card" style="background-image: url('https://via.placeholder.com/300x200')">
+                            <div class="category-overlay">
+                                <h3>Travel</h3>
+                                <p>38 Articles</p>
+                                <a href="#" class="stretched-link"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                        <div class="category-card" style="background-image: url('https://via.placeholder.com/300x200')">
+                            <div class="category-overlay">
+                                <h3>Lifestyle</h3>
+                                <p>35 Articles</p>
+                                <a href="#" class="stretched-link"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                        <div class="category-card" style="background-image: url('https://via.placeholder.com/300x200')">
+                            <div class="category-overlay">
+                                <h3>Health</h3>
+                                <p>29 Articles</p>
+                                <a href="#" class="stretched-link"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                        <div class="category-card" style="background-image: url('https://via.placeholder.com/300x200')">
+                            <div class="category-overlay">
+                                <h3>Business</h3>
+                                <p>27 Articles</p>
+                                <a href="#" class="stretched-link"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                        <div class="category-card" style="background-image: url('https://via.placeholder.com/300x200')">
+                            <div class="category-overlay">
+                                <h3>Finance</h3>
+                                <p>24 Articles</p>
+                                <a href="#" class="stretched-link"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                        <div class="category-card" style="background-image: url('https://via.placeholder.com/300x200')">
+                            <div class="category-overlay">
+                                <h3>Food</h3>
+                                <p>22 Articles</p>
+                                <a href="#" class="stretched-link"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                        <div class="category-card" style="background-image: url('https://via.placeholder.com/300x200')">
+                            <div class="category-overlay">
+                                <h3>Culture</h3>
+                                <p>19 Articles</p>
+                                <a href="#" class="stretched-link"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section> -->
+
+        <!-- Newsletter Section -->
+
+        <%- include("newsletter") %>
+
+
+            <!-- Footer -->
+            <%- include("footer") %>
+
+
+                <!-- Scripts -->
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+                <script>
+                    const loadBlogPosts = async () => {
+                        const response = await fetch('/api/posts');
+                        const blogPosts = await response.json();
+                        console.log(blogPosts)
+                        const FeaturedPosts = document.getElementById('FeaturedPosts');
+
+                        blogPosts.forEach((post, index) => {
+                            const postCard = ` <div class="carousel-item">
+                                    <div class="featured-card">
+                                        <div class="row g-0">
+                                            <div class="col-md-6">
+                                                <img src="https://via.placeholder.com/600x400"
+                                                    class="img-fluid rounded-start" alt="Featured Post">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="card-body">
+                                                    <div class="card-category">Lifestyle</div>
+                                                    <h3 class="card-title">Mindfulness Practices for Busy Professionals
+                                                    </h3>
+                                                    <p class="card-text">Simple yet effective techniques to incorporate
+                                                        mindfulness into your hectic schedule for better mental health.
+                                                    </p>
+                                                    <div class="card-meta">
+                                                        <span><i class="bi bi-clock"></i> 4 min read</span>
+                                                        <span><i class="bi bi-calendar3"></i> June 5, 2023</span>
+                                                    </div>
+                                                    <a href="blog-post.html" class="btn btn-primary">Read More</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>`;
+                            FeaturedPosts.innerHTML += postCard;
+                        });
+
+                    };
+                    loadBlogPosts();
+                </script>
+</body>
+
+</html>

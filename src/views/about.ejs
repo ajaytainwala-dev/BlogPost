@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Insight Blog</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <!-- Header -->
+<%- include('navbar') %>
+    <!-- About Hero Section -->
+    <section class="about-hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="about-title">Our Story</h1>
+                    <p class="about-subtitle">Discover the team and mission behind Insight Blog</p>
+                </div>
+                <div class="col-lg-6">
+                    <img src="/AboutBlog.webp" alt="About Insight Blog" class="img-fluid about-hero-image">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Content Section -->
+    <section class="about-content-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="about-content">
+                        <h2>Who We Are</h2>
+                        <p class="lead">Insight Blog is a platform dedicated to exploring ideas that matter through thoughtful content and engaging stories.</p>
+                        
+                        <p>Founded in 2020, we started with a simple mission: to create a space where curious minds could find well-researched, thought-provoking content across a variety of topics. What began as a small passion project has grown into a community of writers, thinkers, and readers united by a love for learning and sharing knowledge.</p>
+                        
+                        <p>Our team consists of experienced journalists, subject matter experts, and passionate storytellers who are committed to bringing you content that is not only informative but also engaging and accessible. We believe that good content should both educate and inspire.</p>
+                        
+                        <div class="about-quote">
+                            <blockquote>
+                                <p>"We don't just write articles; we craft conversations that continue long after you've finished reading."</p>
+                            </blockquote>
+                        </div>
+                        
+                        <h2>Our Mission</h2>
+                        <p>At Insight Blog, our mission is threefold:</p>
+                        
+                        <div class="row mission-cards">
+                            <div class="col-md-4 mb-4">
+                                <div class="mission-card">
+                                    <div class="mission-icon">
+                                        <i class="bi bi-lightbulb"></i>
+                                    </div>
+                                    <h3>Illuminate</h3>
+                                    <p>Shed light on complex topics through clear, accessible content that anyone can understand and appreciate.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <div class="mission-card">
+                                    <div class="mission-icon">
+                                        <i class="bi bi-chat-dots"></i>
+                                    </div>
+                                    <h3>Engage</h3>
+                                    <p>Foster meaningful conversations around important ideas and encourage diverse perspectives.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <div class="mission-card">
+                                    <div class="mission-icon">
+                                        <i class="bi bi-arrow-up-right-circle"></i>
+                                    </div>
+                                    <h3>Inspire</h3>
+                                    <p>Motivate readers to think critically, explore new ideas, and take action in their own lives.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h2>Our Values</h2>
+                        <ul class="values-list">
+                            <li>
+                                <strong>Accuracy:</strong> We are committed to factual reporting and thorough research in everything we publish.
+                            </li>
+                            <li>
+                                <strong>Accessibility:</strong> We believe knowledge should be accessible to everyone, regardless of background or expertise.
+                            </li>
+                            <li>
+                                <strong>Diversity:</strong> We actively seek out and amplify diverse voices and perspectives.
+                            </li>
+                            <li>
+                                <strong>Curiosity:</strong> We approach every topic with genuine curiosity and a desire to understand.
+                            </li>
+                            <li>
+                                <strong>Integrity:</strong> We maintain editorial independence and transparency in all our content.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Meet Our Team</h2>
+                <p>The passionate individuals behind Insight Blog</p>
+            </div>
+            
+            <div class="row align-items-center justify-content-center">
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="team-card">
+                        <div class="team-img">
+                            <img src="/Ajay Tainwala.jpg" alt="Team Member" class="img-fluid h-80">
+                        </div>
+                        <div class="team-info">
+                            <h3>Ajay Tainwala</h3>
+                            <p class="team-role">Founder & Editor-in-Chief</p>
+                            <p class="team-bio">Former journalist with over 15 years of experience in digital media. Passionate about storytelling and making complex topics accessible.</p>
+                            <div class="team-social">
+                                <a href="#"><i class="bi bi-twitter"></i></a>
+                                <a href="#"><i class="bi bi-linkedin"></i></a>
+                                <a href="#"><i class="bi bi-envelope"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-6 mb-4 mb-md-0">
+                    <div class="stat-card">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">Articles Published</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6 mb-4 mb-md-0">
+                    <div class="stat-card">
+                        <div class="stat-number">50k+</div>
+                        <div class="stat-label">Monthly Readers</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stat-card">
+                        <div class="stat-number">20+</div>
+                        <div class="stat-label">Contributing Writers</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stat-card">
+                        <div class="stat-number">8</div>
+                        <div class="stat-label">Content Categories</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Join Us Section -->
+    <section class="join-us-section">
+        <div class="container">
+            <div class="join-us-container">
+                <div class="row align-items-center">
+                    <div class="col-lg-7">
+                        <h2>Join Our Community</h2>
+                        <p>Interested in contributing to Insight Blog? We're always looking for passionate writers, editors, and subject matter experts to join our team.</p>
+                        <a href="/page/contact" class="btn btn-primary">Get in Touch</a>
+                    </div>
+                    <div class="col-lg-5">
+                        <img src="data:image/jpeg;base64,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" alt="Join Our Team" class="img-fluid join-us-img">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter-section">
+        <div class="container">
+            <div class="newsletter-container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6">
+                        <h2>Subscribe to Our Newsletter</h2>
+                        <p>Get the latest articles, resources, and insights delivered directly to your inbox.</p>
+                    </div>
+                    <div class="col-lg-6">
+                        <form class="newsletter-form">
+                            <div class="input-group">
+                                <input type="email" class="form-control" placeholder="Your email address" required>
+                                <button class="btn btn-primary" type="submit">Subscribe</button>
+                            </div>
+                            <div class="form-check mt-2">
+                                <input class="form-check-input" type="checkbox" id="privacyCheck" required>
+                                <label class="form-check-label" for="privacyCheck">
+                                    I agree to the <a href="#">privacy policy</a>
+                                </label>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+  <%- include('footer') %>
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="btn btn-primary back-to-top">
+        <i class="bi bi-arrow-up"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

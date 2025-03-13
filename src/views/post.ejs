@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create New Blog Post</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.quilljs.com/1.3.6/quill.snow.css"
+    />
+    <style>
+      /* body {
+        background-color: #f8f9fa;
+      }
+
+      .container {
+        background-color: #fff;
+        padding: 2rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+      } */
+
+      h1 {
+        margin-bottom: 1.5rem;
+        color: #343a40;
+      }
+
+      .form-group label {
+        font-weight: bold;
+        color: #495057;
+      }
+
+      #editor-container {
+        height: 300px;
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+      }
+
+      .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+      }
+
+      .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #004085;
+      }
+    </style>
+  </head>
+  <body>
+    <%- include("navbar") %>
+    <div class="container " style="margin:6.5rem auto ;">
+      <h1 style="margin-top: 6.5rem;">Create New Blog Post</h1>
+      <form onsubmit="postFormDetails(event);return false;">
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input
+            type="text"
+            class="form-control"
+            id="title"
+            name="title"
+            required
+          />
+        </div>
+        <div class="form-group">
+            <label for="coverImage" class="form-label mt-3">Cover Image</label>
+            <input
+                type="file"
+                class="form-control"
+                id="coverImage"
+                name="coverImage"
+                accept="image/*"
+            />
+        </div>
+        <div id="uploadedImage" style="margin: auto;">
+            <img src="" alt="" style="width: 100%; height: auto;margin:auto; margin-top: 1rem; display: none;" />
+            <script>
+                document.getElementById("coverImage").addEventListener("change", (event) => {
+                    const file = event.target.files[0];
+                    const reader = new FileReader();
+                    reader.onload = () => {
+                        const img = document.createElement("img");
+                        img.src = reader.result;
+                        img.style.width = "40%";
+                        img.style.height = "auto";
+                        img.style.marginTop = "1rem";
+                        img.style.display = "block";
+                        document.getElementById("uploadedImage").appendChild(img);
+                    };
+                    reader.readAsDataURL(file);
+                });
+            </script>
+        </div>
+        <div class="form-group">
+          <label for="content">Content</label>
+          <div id="editor-container"></div>
+          <textarea
+            name="content"
+            id="content"
+            class="form-control"
+            style="display: none"
+          ></textarea>
+        </div>
+        <div class="form-group">
+          <label for="tags">Tags (comma separated)</label>
+          <input type="text" class="form-control" id="tags" name="tags" />
+        </div>
+        <button type="submit" class="btn btn-primary mt-3 " style="width: 100%;">Post</button>
+      </form>
+    </div>
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <script>if (!localStorage.getItem("token")) window.location.href = "/auth/page/login";</script>
+
+    <script>
+      var quill = new Quill("#editor-container", {
+        theme: "snow",
+      });
+
+      const postFormDetails = async (event) => {
+        let title = document.getElementById("title").value;
+        let content = quill.root.innerHTML;
+        let tags = document.getElementById("tags").value;
+        const formData = new FormData();
+        formData.append("title",title);
+        formData.append("content",content);
+        formData.append("tags",tags);
+        formData.append("image", document.getElementById("coverImage").files[0]);
+
+        try {
+            event.preventDefault();
+            const response = await fetch("/api/post/new", {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`,
+                    "format": "multipart/form-data",
+                },
+                body: formData,
+            });
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            const data = await response.json();
+            console.log('Success:', data);
+            window.location.href = `/page/dashboard`;
+            // Optionally redirect or show a success message here
+        } catch (error) {
+            
+            console.error('Error:', error);
+        }
+      }
+
+    
+    </script>
+    <%- include("footer") %>
+  </body>
+</html>
