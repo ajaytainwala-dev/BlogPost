@@ -38,8 +38,8 @@
         </main>
 
         <script>
-            if (!localStorage.getItem("admin-token")) {
-                window.location.href = "/page/admin/dashboard"; // Redirect to login page
+            if (localStorage.getItem("admin-token")) {
+                window.location.href = "/page/admin/dashboard"; // Redirect to dashboard
             }
             const doLogin = async (event) => {
                 try {
