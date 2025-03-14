@@ -10,14 +10,14 @@ import adminMiddleware from "../middlewares/adminMiddleware.js";
 const router = express.Router();
 
 router.get("/page/admin/auth/login", (req,res)=>{
-    res.render("admin/login");
+    res.render("Admin/login");
 });
 router.get("/page/admin/dashboard", (req,res)=>{
-    res.render("admin/dashboard");
+    res.render("Admin/dashboard");
 });
 router.get("/page/admin/view/profile/:userID",(req,res)=>{
-    res.render("admin/viewprofile", { userID: req.params.userID });
-})
+    res.render("Admin/viewprofile", { userID: req.params.userID });
+});
 router.post("/api/admin/auth/login", adminLogin);
 
 router.get("/api/admin/all/posts", adminMiddleware, getAllAdminPosts);
