@@ -9,6 +9,11 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
   <link rel="stylesheet" href="/style.css">
+  <style>
+    .modal-backdrop.show {
+      z-index: -1;
+    }
+  </style>
 </head>
 
 <body>
@@ -18,11 +23,11 @@
         <a class="navbar-brand" href="/">
           <span class="brand-text">Insight</span>
         </a>
-      
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
-              aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon" id="navbarIcon"></span>
-            </button>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon" id="navbarIcon"></span>
+        </button>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto">
@@ -69,11 +74,121 @@
           <div id="navProfile" style="display: none;">
 
             <div class="d-flex align-items-center ms-lg-4">
-              <div class="search-box me-3">
-                <input type="text" class="search-input" placeholder="Search...">
-                <button class="search-button">
+              <div class="search-box me-3" style="margin:auto 3rem;">
+                <!-- <input type="text" class="search-input" id="searchInput" placeholder="Search..."> -->
+                <button class="search-button" data-bs-toggle="modal" data-bs-target="#searchModal"
+                  style="border-radius: 8px;border: 1px solid black;padding: 0.8rem;margin: auto 10px;">
                   <i class="bi bi-search"></i>
                 </button>
+
+                <!-- Modal -->
+                <div class="modal " id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel"
+                  aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="searchModalLabel">Search Posts by title  , Authors by name</h5>
+
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div
+                        style="padding:5px; display: flex; justify-content: center;gap: 4px;border: 1px solid black;margin: 10px;border-radius: 9px;">
+
+
+                        <input type="text" id="searchInput" placeholder="Search..." aria-label="Search"
+                          class="form-control" style="border: none;" minlength="3"
+                          pattern=".{3,}"
+                          oninput="this.setCustomValidity('')"
+                          oninvalid="this.setCustomValidity('Please enter at least 3 characters')">
+
+                        <button class="btn btn-secondary" onclick="document.getElementById('searchInput').value = '';"
+                          style="border: none;background-color: transparent;color: black;"><i
+                            class="bi bi-x-circle"></i></button>
+
+                        <button class="btn btn-primary" onclick="search()" id="searchButton">Search</button>
+                        <script>
+                          searchInput.addEventListener('keypress', function (e) {
+                          if (e.key === 'Enter') {
+                            search();
+                          }
+                          });
+                        </script>
+                      </div>
+                        <div class="modal-body" id="searchResults" style="width: 100%;">
+                        <!-- Search results will be displayed here -->
+                        <div id="postResult" style="width: 100%;"></div>
+                        <div id="userResult" style="width: 100%;"></div>
+                        <div id="noResults" style="width: 100%;"></div>
+                        </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+                <script>
+                  const searchInput = document.getElementById('searchInput');
+                  const searchButton = document.querySelector('.search-button');
+                  const postResult = document.getElementById('postResult');
+                  const userResult = document.getElementById('userResult');
+                  const noResults = document.getElementById('noResults');
+
+                  const search = async () => {
+                    const searchValue = searchInput.value;
+                    const response = await fetch(`/api/search?q=${searchValue}`);
+                    const results = await response.json();
+                    console.log(results);
+
+                    // Handle search results here
+                    if (results.posts.length === 0 && results.users.length === 0) {
+                      noResults.innerHTML = '<p style="text-align:center;"> No results found.</p>';
+                    } else {
+                      noResults.innerHTML = '';
+                      // Process and display posts and users
+                      postResult.innerHTML = results.posts.map(post => ` 
+                                    <div class="post-card h-100">
+                                    
+                                        <div class="post-card-img" style="height:250px;">
+                                            <div class="post-category">${post.tags[0]}</div>
+                                            <img src="/uploads/${post.image}" alt="Post Image" class="w-100 img-fluid" >
+                                        </div>
+                                        <div class="post-card-body d-flex flex-column">
+                                            <h3 class="post-card-title">${post.title}</h3>
+                                            <p class="post-card-text">Click to read more...</p>
+                                            <div class="post-card-meta mt-auto">
+                                                <span><i class="bi bi-clock"></i> ${Math.ceil(post.content.split(' ').length / 200)} min read</span>
+                                                <span><i class="bi bi-calendar3"></i> ${new Date(post.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                                                <span><i class="bi bi-pen-fill"></i> ${post.authorId.name}</span>
+                                            </div>
+                                            <a href="/page/view/post/${post.title}/${post._id}" class="btn btn-primary mt-2">Read More</a>
+                                        </div>
+                                    
+                                </div>`).join('');
+                        userResult.innerHTML = results.users.map(user => `
+                        <div class="card mb-3" style="max-width: 540px;">
+                          <div class="row g-0">
+                          <div class="col-md-4">
+                            <img src="/profile/${user.profileImage}" class="img-fluid rounded-start" alt="${user.name}">
+                          </div>
+                          <div class="col-md-8">
+                            <div class="card-body">
+                            <h5 class="card-title">${user.name}</h5>
+                            <p class="card-text">${user.about}</p>
+                            <p class="card-text"><small class="text-muted">${user.jobTitle}</small></p>
+                            <a href="/page/profile/${user._id}" class="btn btn-primary">View Profile</a>
+                            </div>
+                          </div>
+                          </div>
+                        </div>
+                        `).join('');
+                    }
+                    noResults.innerHTML = results.posts.length === 0 && results.users.length === 0 ? 'No results found.' : '';
+                  }
+
+
+                </script>
               </div>
               <div class="dropdown"></div>
               <button class="btn btn-secondary dropdown-toggle" type="button" id="profileDropdown"
@@ -90,7 +205,6 @@
             </div>
           </div>
           <script>
-
             if (token) {
               document.querySelector('.dropdown').style.display = 'block';
               document.querySelector('#navProfile').style.display = 'block';

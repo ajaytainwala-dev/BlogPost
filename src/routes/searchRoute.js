@@ -4,6 +4,6 @@ const router = express.Router();
 
 
 
-router.get("/api/search", searchController);
+router.get("/api/search/", searchController);
 
 export default router;

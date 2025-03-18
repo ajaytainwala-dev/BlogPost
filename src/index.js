@@ -8,6 +8,7 @@ import profileRoutes from "./routes/profileRoutes.js";
 import postRoutes from "./routes/postRoute.js";
 import dashboardRoutes from "./routes/dashboardRoute.js";
 import newsLetter from "./routes/newsletter.js";
+import searchRoutes from "./routes/searchRoute.js";
 import commentRoutes from "./routes/commentRoute.js";
 import cors from "cors";
 import adminRoutes from "./routes/adminRoutes.js";
@@ -32,6 +33,7 @@ app.use("/", profileRoutes);
 app.use("/", postRoutes);
 app.use("/", dashboardRoutes);
 app.use("/", newsLetter);
+app.use("/", searchRoutes);
 app.use("/", adminRoutes);
 app.use("/", commentRoutes);
 
@@ -42,7 +44,7 @@ app.get("/page/view/post/:title/:id",(req,res)=>{
   const { title, id } = req.params;
   
   res.render("viewpost.ejs", { title, id });
-})
+});
 app.get("/page/about",(_, res) => {
   res.render("about");
 })
